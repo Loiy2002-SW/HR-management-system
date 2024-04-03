@@ -1,0 +1,15 @@
+#footer{
+    background-color: rgb(95, 145, 145);
+    font-weight: bold;
+    color: white;
+
+}
+
+table , th, td, tr{
+
+    text-align: center;
+    font-size: large;
+
+}
+
+

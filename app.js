@@ -40,6 +40,8 @@ function onsubmitListener(event){
 
     newEmployee.renderEmployeeData();
 
+    saveEmployeesData(employees);
+
 
 }
 
@@ -143,7 +145,11 @@ emp.calculateEmployeeNetSalary();
     });
   }
 
-  // Employees Object
+  getEmployeesData();
+
+  if(employees.length == 0){
+
+     // Employees Object
   new Employee("Lana Ali", " ", "Finance", "Senior");
   new Employee("Tamara Ayoub", " ", "Marketing", "Senior");
   new Employee("Safi Walid", " ", "Administration", "Mid-Senior");
@@ -151,7 +157,43 @@ emp.calculateEmployeeNetSalary();
   new Employee("Rana Saleh", " ", "Development", "Junior");
   new Employee("Hadi Ahmad", " ", "Finance", "Mid-Senior");
 
-renderEmployees();
+
+  renderEmployees();
+
+  }
+ 
+
+function saveEmployeesData(data){
+
+    let StringifyedData = JSON.stringify(data);
+
+    localStorage.setItem("employeesData", StringifyedData);
+
+}
+
+
+
+function getEmployeesData(){
+
+    let data = localStorage.getItem("employeesData");
+    let parsedData = JSON.parse(data);
+
+    if(parsedData != null){
+
+    
+ //re-instantiation.
+    for (let i = 0; i < parsedData.length; i++) {
+        
+    new Employee(parsedData[i].fullName, parsedData[i].imageUrl, parsedData[i].department, parsedData[i].level);
+
+    employees[i].calculateEmployeeNetSalary();
+    employees[i].renderEmployeeData();
+    
+}
+    }
+   
+
+}
 
 
 

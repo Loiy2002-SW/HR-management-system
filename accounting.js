@@ -25,6 +25,10 @@ getData();
 
 let tbody = document.getElementById('tableBody');
 
+let totalNumberOfEmployees = 0;
+let totalSalaryOfEmployees = 0;
+let averageSalary = 0;
+
 for (let i = 0; i < departments.length; i++) {
 
 
@@ -36,12 +40,34 @@ for (let i = 0; i < departments.length; i++) {
     <td>${department.name}</td>
     <td>${department.noOfEmployees}</td>
     <td>${department.totalSalary}</td>
-    <td>${department.avarage}</td>
+    <td>${department.average}</td>
 
     </tr>`;
 
+    totalNumberOfEmployees += department.noOfEmployees;
+    totalSalaryOfEmployees += department.totalSalary;
+    averageSalary += department.average;
+
+
 
 }
+
+
+tbody.innerHTML +=
+    `<tfoot>
+
+    <tr id="footer"> 
+
+    <td> Total </td>
+    <td>${totalNumberOfEmployees}</td>
+    <td>${totalSalaryOfEmployees}</td>
+    <td>${averageSalary.toFixed(2)}</td>
+
+    </tr>
+
+</tfoot>
+`;
+
 
 
 
@@ -85,11 +111,14 @@ function getData() {
 
     }
 
-
     departments.forEach(department => {
         if (department.noOfEmployees > 0) {
+
+
             department.average = department.totalSalary / department.noOfEmployees;
+            console.log(department.average);
         } else {
+
             department.average = 0; // Handle division by zero case
         }
     });

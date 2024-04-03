@@ -1,16 +1,98 @@
 
-class Employee {
-    constructor(id, fullName, imageUrl, department, level, salary) {
+let employees = [];
 
-        this.id = id;
+class Employee {
+    constructor(fullName, imageUrl, department, level) {
+
+        this.id = idGenerator();
         this.fullName = fullName;
         this.imageUrl = imageUrl;
         this.department = department;
         this.level = level;
-        this.salary = salary;
+        this.salary = this.calculateEmployeeNetSalary;
+        employees.push(this);
 
     }
 }
+
+
+
+let formElement = document.getElementById('employeesForm');
+
+formElement.addEventListener('submit', onsubmitListener);
+
+
+
+function onsubmitListener(event){
+
+    event.preventDefault();
+
+
+    let fullName = event.target.fullName.value;
+    let department = event.target.department.value;
+    let level = event.target.level.value;
+    let imageUrl = event.target.imageUrl.value;
+
+    
+
+    let newEmployee = new Employee(fullName, imageUrl, department, level);
+    newEmployee.calculateEmployeeNetSalary();
+
+    newEmployee.renderEmployeeData();
+
+
+}
+
+
+Employee.prototype.renderEmployeeData =  function(){
+
+    let card = document.createElement('div');
+
+    card.classList.add('card');
+
+    let imageElement = document.createElement('img');
+    let nameAndIdElement = document.createElement('h2');
+    let departmentAndLevel = document.createElement('h2');
+    let salary = document.createElement('h2');
+
+    imageElement.src = this.imageUrl;
+    nameAndIdElement.textContent = `Name: ${this.fullName} - ID: ${this.id}`;
+    departmentAndLevel.textContent = `Department: ${this.department} - Level: ${this.level}`;
+    salary.textContent = this.salary;
+
+    card.appendChild(imageElement);
+    card.appendChild(nameAndIdElement);
+    card.appendChild(departmentAndLevel);
+    card.appendChild(salary);
+
+    let departmentSection = document.getElementById(this.department);
+
+    if(departmentSection !== null){
+
+        document.getElementById(this.department).appendChild(card);
+
+    }else{
+        
+        let newDepartmentSection = document.createElement('section');
+        newDepartmentSection.id = this.department;
+        newDepartmentSection.classList.add('cardsContainer');
+        let sectionName = document.createElement('h1');
+
+        sectionName.textContent = this.department;
+        sectionName.classList.add('sectionName');
+
+        document.getElementById('container').appendChild(sectionName);
+        newDepartmentSection.appendChild(card);
+        document.getElementById('container').appendChild(newDepartmentSection);
+
+
+    }
+
+    
+
+}
+
+
 
 Employee.prototype.calculateEmployeeNetSalary = function () {
 
@@ -43,42 +125,77 @@ Employee.prototype.calculateEmployeeNetSalary = function () {
 }
 
 
-Employee.prototype.RenderEmployeeNameAndSalary = function(){
+function idGenerator(){
 
-    return `${this.fullName} ${this.salary}`;
+    return `${Math.floor(Math.random() * 900) + 100}${employees.length}`;
 
 }
 
+function renderEmployees() {
 
-const employees = [
-    new Employee(1000, "Ghazi Samer", "https://cdn-icons-png.flaticon.com/128/4140/4140048.png", "Administration", "Senior"),
-    new Employee(1001, "Lana Ali", "https://cdn-icons-png.flaticon.com/128/4140/4140047.png", "Finance", "Senior"),
-    new Employee(1002, "Tamara Ayoub", "https://cdn-icons-png.flaticon.com/128/4140/4140051.png", "Marketing", "Senior"),
-    new Employee(1003, "Safi Walid", "https://cdn-icons-png.flaticon.com/128/4139/4139981.png", "Administration", "Mid-Senior"),
-    new Employee(1004, "Omar Zaid", "https://cdn-icons-png.flaticon.com/128/3001/3001764.png", "Development", "Senior"),
-    new Employee(1005, "Rana Saleh", "https://cdn-icons-png.flaticon.com/128/4140/4140047.png", "Development", "Junior"),
-    new Employee(1006, "Hadi Ahmad", "https://cdn-icons-png.flaticon.com/128/4202/4202831.png", "Finance", "Mid-Senior")
-];
+    employees.forEach((emp) => {
+let fname = emp.fullName.split(' ')[0];
+
+emp.calculateEmployeeNetSalary();
+
+        emp.imageUrl = `assets/${fname}.jpg`;
+      emp.renderEmployeeData();
+    });
+  }
+
+  // Employees Object
+  new Employee("Lana Ali", " ", "Finance", "Senior");
+  new Employee("Tamara Ayoub", " ", "Marketing", "Senior");
+  new Employee("Safi Walid", " ", "Administration", "Mid-Senior");
+  new Employee("Omar Zaid", " ", "Development", "Senior");
+  new Employee("Rana Saleh", " ", "Development", "Junior");
+  new Employee("Hadi Ahmad", " ", "Finance", "Mid-Senior");
+
+renderEmployees();
 
 
-let tbody = document.getElementsByTagName('tbody')[0];
 
-for (let i = 0; i < employees.length; i++) {
+// Employee.prototype.RenderEmployeeNameAndSalary = function(){
+
+//     return `${this.fullName} ${this.salary}`;
+
+// }
+
+
+
+
+// let tbody = document.getElementsByTagName('tbody')[0];
+
+// for (let i = 0; i < employees.length; i++) {
     
-    let employee = employees[i];
+//     let employee = employees[i];
 
-    tbody.innerHTML += 
-    `<tr> 
+//     tbody.innerHTML += 
+//     `<tr> 
     
-    <td>${employee.id}</td>
-    <td>${employee.fullName}</td>
-    <td><img src="${employee.imageUrl}" alt="img" width=50%></td>
-    <td>${employee.department}</td>
-    <td>${employee.level}</td>
-    <td>${employee.calculateEmployeeNetSalary()}</td>
-    <td>${employee.salary}</td>
+//     <td>${employee.id}</td>
+//     <td>${employee.fullName}</td>
+//     <td><img src="${employee.imageUrl}" alt="img" width=50%></td>
+//     <td>${employee.department}</td>
+//     <td>${employee.level}</td>
+//     <td>${employee.calculateEmployeeNetSalary()}</td>
+//     <td>${employee.salary}</td>
     
-    </tr>`;
+//     </tr>`;
 
     
-}
+// }
+
+// addExistingEmployees();
+
+
+// function addExistingEmployees(){
+
+
+//     let em1 = new Employee("Ghazi Samer", "https://cdn-icons-png.flaticon.com/128/4140/4140048.png", "Administration", "Senior", 2);
+
+//     em1.renderEmployeeData();
+
+
+
+// }

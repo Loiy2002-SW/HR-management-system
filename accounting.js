@@ -60,7 +60,7 @@ tbody.innerHTML +=
 
     <td> Total </td>
     <td>${totalNumberOfEmployees}</td>
-    <td>${totalSalaryOfEmployees}</td>
+    <td>${totalSalaryOfEmployees.toFixed(2)}</td>
     <td>${averageSalary.toFixed(2)}</td>
 
     </tr>

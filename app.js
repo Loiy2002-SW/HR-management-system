@@ -157,7 +157,7 @@ emp.calculateEmployeeNetSalary();
   new Employee("Rana Saleh", " ", "Development", "Junior");
   new Employee("Hadi Ahmad", " ", "Finance", "Mid-Senior");
 
-
+  saveEmployeesData(employees);
   renderEmployees();
 
   }

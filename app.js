@@ -159,6 +159,7 @@ emp.calculateEmployeeNetSalary();
 
 
   renderEmployees();
+      saveEmployeesData(employees);
 
   }
  
